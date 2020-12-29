@@ -1,21 +1,31 @@
-import { Card, CardImg, CardImgOverlay } from 'reactstrap';
+import { Card, CardImg, CardImgOverlay,CardTitle } from 'reactstrap';
 
-
-const Menu = (props)=>{
+function RenderMenuItem ({dish, onClick}) {
   return (
-      <div className="row container pt-4 m-auto">
-        {
-          props.dishes.map(dish=>{
-            return (
-              <Card className="col-md-5 col-12 mt-3 mx-auto p-0" key={dish.id} onClick={() => props.onClick(dish.id)}>
-                <CardImg top src={dish.image} alt={dish.name} />
-                <CardImgOverlay tag="h4">{dish.name}</CardImgOverlay>
-              </Card>
-            )
-          })
-        }
-      </div>
-    );
+      <Card
+          className="col-md-5 col-12 mt-3 mx-auto p-0"
+          onClick={() => onClick(dish.id)}>
+          <CardImg top width="100%" src={dish.image} alt={dish.name} />
+          <CardImgOverlay tag="h4">
+              <CardTitle>{dish.name}</CardTitle>
+          </CardImgOverlay>
+      </Card>
+  );
+}
+
+const Menu = (props) => {
+
+  const menu = props.dishes.map((dish) => {
+      return (
+        <RenderMenuItem key={dish.id} dish={dish} onClick={props.onClick} />
+      );
+  });
+
+  return (
+    <div className="row container pt-4 m-auto">
+      {menu}
+    </div>
+  );
 }
 
 export default Menu;
