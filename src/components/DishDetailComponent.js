@@ -34,7 +34,7 @@ export default class DishDetail extends Component {
               <li>
                 <p>{comment.comment}</p>
                 <p>
-                  --{comment.author}, {comment.date}
+                  --{comment.author}, {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comment.date)))}
                 </p>
               </li>
             </ul>
@@ -44,7 +44,7 @@ export default class DishDetail extends Component {
   }
   render() {
     return (
-      <div className="row mt-5">
+      <div className="row mt-5 container pt-4 m-auto">
         <div className="col-md-5 col-12 m-1">
           {this.renderDish(this.props.dish)}
         </div>
