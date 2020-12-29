@@ -3,8 +3,8 @@ import { Card, CardImg, CardImgOverlay,CardTitle } from 'reactstrap';
 function RenderMenuItem ({dish, onClick}) {
   return (
       <Card
-          className="col-md-5 col-12 mt-3 mx-auto p-0"
-          onClick={() => onClick(dish.id)}>
+          className="col-md-5 col-12 mt-3 mx-auto p-0" //onClick={() => onClick(dish.id)}
+      >
           <CardImg top width="100%" src={dish.image} alt={dish.name} />
           <CardImgOverlay tag="h4">
               <CardTitle>{dish.name}</CardTitle>
@@ -17,12 +17,12 @@ const Menu = (props) => {
 
   const menu = props.dishes.map((dish) => {
       return (
-        <RenderMenuItem key={dish.id} dish={dish} onClick={props.onClick} />
+        <RenderMenuItem key={dish.id} dish={dish}/> //onClick={props.onClick} 
       );
   });
 
   return (
-    <div className="row container pt-4 m-auto">
+    <div className="row container pt-4 m-auto pb-4">
       {menu}
     </div>
   );
