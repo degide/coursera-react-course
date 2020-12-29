@@ -11,6 +11,7 @@ import { DISHES } from "../shared/dishes"
 import { COMMENTS } from '../shared/comments';
 import { PROMOTIONS } from '../shared/promotions';
 import { LEADERS } from '../shared/leaders';
+import About from "./AboutComponent"
 
 export default class Main extends Component {
         constructor(props) {
@@ -52,6 +53,7 @@ export default class Main extends Component {
                     <Route exact path='/menu' component={() => <Menu dishes={this.state.dishes} />} />
                     <Route exact path='/contactus' component={Contact} />
                     <Route path='/menu/:dishId' component={DishWithId} />
+                    <Route exact path='/aboutus' component={()=> <About leaders={this.state.leaders}/>} />
                     <Redirect to="/home" />
                 </Switch>
                 {/* <Menu dishes={this.state.dishes} onClick={(dishId) => this.onDishSelect(dishId)} />
