@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
-import { Breadcrumb, BreadcrumbItem, Button, Form, FormGroup, Label, Input, Col, Row, FormFeedback } from 'reactstrap';
+import { Breadcrumb, BreadcrumbItem, Button, Form, FormGroup, Label, Input, Col, FormFeedback } from 'reactstrap';
 
 export default class Contact extends Component {
     constructor(props) {
@@ -18,7 +18,8 @@ export default class Contact extends Component {
                 firstname: false,
                 lastname: false,
                 telnum: false,
-                email: false
+                email: false,
+                message: false
             }
         }
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -31,12 +32,13 @@ export default class Contact extends Component {
         });
     }
 
-    validate(firstname, lastname, telnum, email) {
+    validate(firstname, lastname, telnum, email, message) {
         const errors = {
             firstname: '',
             lastname: '',
             telnum: '',
-            email: ''
+            email: '',
+            message: ''
         };
 
         if (this.state.touched.firstname && firstname.length < 3)
@@ -46,9 +48,12 @@ export default class Contact extends Component {
 
         if (this.state.touched.lastname && lastname.length < 3)
             errors.lastname = 'Last Name should be >= 3 characters';
+
+        else if (this.state.touched.message && message.length > 200)
+            errors.lastname = 'message should be <= 200 characters';
+
         else if (this.state.touched.lastname && lastname.length > 10)
             errors.lastname = 'Last Name should be <= 10 characters';
-
         const reg = /^\d+$/;
         if (this.state.touched.telnum && !reg.test(telnum))
             errors.telnum = 'Tel. Number should contain only numbers';
@@ -136,6 +141,26 @@ export default class Contact extends Component {
                                     onBlur={this.handleBlur('email')}
                                     onChange={this.handleInputChange} />
                                 <FormFeedback>{errors.email}</FormFeedback>
+                            </Col>
+                        </FormGroup>
+                        <FormGroup row>
+                            <Label htmlFor="message" md={2}>Message</Label>
+                            <Col md={10}>
+                                <Input type="textarea" id="message" name="message" rows="12"
+                                    placeholder="Message..."
+                                    value={this.state.message}
+                                    valid={errors.message === ''}
+                                    invalid={errors.message !== ''}
+                                    onBlur={this.handleBlur('message')}
+                                    onChange={this.handleInputChange} />
+                                <FormFeedback>{errors.message}</FormFeedback>
+                            </Col>
+                        </FormGroup>
+                        <FormGroup row>
+                            <Col md={{ size: 10, offset: 2 }}>
+                                <Button type="submit" color="primary">
+                                    Send Feedback
+                                </Button>
                             </Col>
                         </FormGroup>
                     </Form>
