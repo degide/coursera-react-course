@@ -2,7 +2,7 @@ import { Component } from 'react'
 import Menu from './MenuComponent';
 import {} from 'reactstrap'
 import Home from './HomeComponent';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route, Redirect, withRouter } from 'react-router-dom'
 import DishDetailComponent from './DishDetailComponent'
 import Contact from './ContactComponent';
 import Header from './HeaderComponent';
@@ -12,8 +12,20 @@ import { COMMENTS } from '../shared/comments';
 import { PROMOTIONS } from '../shared/promotions';
 import { LEADERS } from '../shared/leaders';
 import About from "./AboutComponent"
+import { connect } from 'react-redux';
 
-export default class Main extends Component {
+
+const mapStateToProps = state => {
+  return {
+    dishes: state.dishes,
+    comments: state.comments,
+    promotions: state.promotions,
+    leaders: state.leaders
+  }
+}
+
+
+class Main extends Component {
         constructor(props) {
         super(props);
         this.state = {
@@ -63,3 +75,5 @@ export default class Main extends Component {
         );
     }
 }
+
+export default withRouter(connect(mapStateToProps)(Main));
