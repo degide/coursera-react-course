@@ -13,6 +13,7 @@ import { PROMOTIONS } from '../shared/promotions';
 import { LEADERS } from '../shared/leaders';
 import About from "./AboutComponent"
 import { connect } from 'react-redux';
+import { addComment } from '../redux/ActionCreators';
 
 
 const mapStateToProps = state => {
@@ -24,6 +25,9 @@ const mapStateToProps = state => {
   }
 }
 
+const mapDispatchToProps = dispatch => ({
+    addComment: (dishId, rating, author, comment) => dispatch(addComment(dishId, rating, author, comment))
+  });
 
 class Main extends Component {
         constructor(props) {
@@ -54,7 +58,8 @@ class Main extends Component {
         const DishWithId = ({match}) => {
             return(
                 <DishDetailComponent dish={this.state.dishes.filter((dish) => dish.id === parseInt(match.params.dishId,10))[0]} 
-                  comments={this.state.comments.filter((comment) => comment.dishId === parseInt(match.params.dishId,10))} />
+                  comments={this.state.comments.filter((comment) => comment.dishId === parseInt(match.params.dishId,10))} 
+                  addComment={this.props.addComment}/>
             );
           };
         return (
@@ -68,12 +73,10 @@ class Main extends Component {
                     <Route exact path='/aboutus' component={()=> <About leaders={this.state.leaders}/>} />
                     <Redirect to="/home" />
                 </Switch>
-                {/* <Menu dishes={this.state.dishes} onClick={(dishId) => this.onDishSelect(dishId)} />
-                <DishDetailComponent dish={this.state.dishes.filter((dish) => dish.id === this.state.selectedDish)[0]} /> */}
                 <Footer />
             </div>
         );
     }
 }
 
-export default withRouter(connect(mapStateToProps)(Main));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Main));

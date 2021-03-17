@@ -34,9 +34,9 @@ class CommentForm extends Component {
       isModalOpen: !this.state.isModalOpen
     })
   }
-  handleSubmit(event) {
-    console.log('Current State is: ' + JSON.stringify(event));
-    alert('Current State is: ' + JSON.stringify(event));
+  handleSubmit(values) {
+    this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
+    this.toggleModal()
   }
   render() {
     const maxLength = (len) => (val) => !(val) || (val.length <= len);
@@ -107,7 +107,7 @@ class CommentForm extends Component {
             </LocalForm>
           </ModalBody>
         </Modal>
-        <Button className="btn btn-info" onClick={() => this.toggleModal()}>
+        <Button className="btn btn-info" onClick={()=> this.toggleModal()}>
           <i className="fa fa-edit mr-2"></i>
             Submit A Comment
         </Button>
@@ -132,7 +132,7 @@ function RenderDish({ dish }) {
   }
 }
 
-function RenderComments({ comments }) {
+function RenderComments({ comments,addComment }) {
   return comments == null ? <div></div> :
     <div>
       <h4>Comments</h4>
@@ -148,7 +148,7 @@ function RenderComments({ comments }) {
           </ul>
         );
       })}
-      <CommentForm></CommentForm>
+      <CommentForm addComment={addComment} dishId={comments[0].dishId}></CommentForm>
     </div>
 }
 
@@ -170,7 +170,7 @@ const DishDetail = (props) => {
           <RenderDish dish={props.dish} />
         </div>
         <div className="col-12 col-md-5 m-1">
-          <RenderComments comments={props.comments} />
+          <RenderComments comments={props.comments} addComment={props.addComment}/>
         </div>
       </div>
     </div>
